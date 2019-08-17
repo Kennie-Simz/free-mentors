@@ -82,11 +82,55 @@ body {
     font-size: 15px;
     text-decoration: none;
     color: #03ff03;
-    ext-align: center;
+    text-align: center;
     margin: auto;
     transition: 0.4s all;
 }
+.b3 {
+    display: block;
+    width: 250px;
+    padding: 10px 0;
+    font-size: 15px;
+    text-decoration: none;
+    color: #fffb00;
+    text-align: center;
+    margin: auto;
+    transition: 0.4s all;
+}
+.create {
+    width: 150px;
+    height: 40px;
+    background: #3fee88;
+    border-radius: 10px;
+    margin: 14px auto;
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    border: none;
+    color: #f1f1f1;
+    cursor: pointer;
+}
 
+@media screen and (max-width:768px) {
+    .create {
+        width: 150px;
+        height: 40px;
+        background: #3fee88;
+        border-radius: 10px;
+        margin: 14px auto;
+        display: block;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 16px;
+        border: none;
+        color: #f1f1f1;
+        cursor: pointer;
+    }
+}
+
+.create:hover {
+    background: #fffb00;
+    color: #000000;
+}
 a:hover{
     background: #000000;
 }
