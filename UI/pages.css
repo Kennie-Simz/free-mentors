@@ -180,6 +180,18 @@ nav {
 .box1 {
     flex: 3;
 }
+.box1 .clear {
+    float: right;
+    padding: 1px;
+    width: 70px;
+    height: 50%;
+    color: #ffffff;
+    background-color: #000000;
+    border: 1px solid rgb(29, 165, 11);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .box1 .clear button:hover {
     background-color: #fffb00;
     color: #000000;
@@ -201,7 +213,7 @@ nav {
     float: right;
 }
 .box2 {
-    flex: 1;
+    flex: 2;
 }
 
 footer {
