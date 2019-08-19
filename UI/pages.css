@@ -180,6 +180,12 @@ nav {
 .box1 {
     flex: 3;
 }
+
+.box1 .inner-box {
+    background: #d2e0d9;
+    width: auto;
+    height: auto;
+}
 .box1 .clear {
     float: right;
     padding: 1px;
@@ -215,11 +221,11 @@ nav {
 .box2 {
     flex: 1;
 }
-.box3 img {
-    float: left;
-    width: 40%;
-    height: 20%;
+
+.box3 {
+    flex: 1;
 }
+
 
 footer {
     display: flex;
