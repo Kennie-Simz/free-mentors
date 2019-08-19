@@ -16,8 +16,8 @@ body {
     text-align: center;
 }
 .container {
-    width: 50%;
-    height: 60%;
+    width: 45%;
+    height: 50%;
     background: url(./images/background\ image.jpeg);
     position: absolute;
     top: 50%;
@@ -31,6 +31,13 @@ body {
     font-size: 40px;
     margin-top: 40px;
     margin-bottom: 40px;
+}
+.container .back {
+    float: left;
+    padding-top: 30%;
+    background-color: #03ff03;
+    color: #fffb00;
+    font-style: none;
 }
 
 .tbox {
@@ -97,6 +104,20 @@ body {
     margin: auto;
     transition: 0.4s all;
 }
+.b4 {
+    display: block;
+    width: 150px;
+    padding: 0;
+    font-size: 20px;
+    text-decoration: none;
+    color: #7a7807;
+    text-align: center;
+    float: left;
+    margin-top: 600px;
+    margin-left: 450px;
+    transition: 0.4s all;
+}
+
 .create {
     width: 150px;
     height: 40px;
@@ -125,12 +146,25 @@ body {
         color: #f1f1f1;
         cursor: pointer;
     }
+    .b4 {
+        display: block;
+        width: 150px;
+        padding: 0;
+        font-size: 20px;
+        text-decoration: none;
+        color: #7a7807;
+        text-align: center;
+        float: left;
+        margin-top: 600px;
+        margin-left: 130px;
+        transition: 0.4s all;
+    }
 }
 
 .create:hover {
     background: #fffb00;
     color: #000000;
 }
-a:hover{
+.container a:hover{
     background: #000000;
 }

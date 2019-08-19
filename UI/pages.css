@@ -240,6 +240,16 @@ nav {
 .box3 {
     flex: 1;
 }
+.box5 {
+    flex: 1;
+}
+.inner-box span a {
+    text-decoration: none;
+    color: #000000;
+}
+.inner-box span a:hover {
+    color: #fffb00;
+}
 
 
 footer {
