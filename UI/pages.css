@@ -171,11 +171,11 @@ nav {
     background: #c20000;
 }
 .box1 .inner-box .accept {
-    background: #000000;
+    background: #0a0000;
 }
 .box1 .inner-box .accept:hover {
-    background: #3fee88;
-    color: #000000;
+    background: #3def88;
+    color: #0a0a0a;
 }
 
 .box1 .content {
