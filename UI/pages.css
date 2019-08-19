@@ -153,14 +153,29 @@ nav {
 }
 .box1 button {
     float: right;
+    justify-content: space-around;
     padding: 1px;
     width: 70px;
     height: 50%;
     color: #ffffff;
     background-color: #000000;
-    border: 1px solid rgb(29, 165, 11);
+    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.box1 .inner-box .decline {
+    background: #000000;
+}
+.box1 .inner-box .decline:hover {
+    background: #c20000;
+}
+.box1 .inner-box .accept {
+    background: #000000;
+}
+.box1 .inner-box .accept:hover {
+    background: #3fee88;
+    color: #000000;
 }
 
 .box1 .content {
