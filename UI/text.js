@@ -55,7 +55,6 @@ function addItem(message, id, done, trash) {
     `<li class="item">
     <input class="check ${DONE}" type="checkbox" name="check" value="" id="${id} checked"> 
     <p class="text ${DEL}">${message}</p>
-    <button class="del" id="${id}">del</button>
 </li>
     `
     const position = "beforeend"
