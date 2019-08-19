@@ -213,7 +213,12 @@ nav {
     float: right;
 }
 .box2 {
-    flex: 2;
+    flex: 1;
+}
+.box3 img {
+    float: left;
+    width: 40%;
+    height: 20%;
 }
 
 footer {
