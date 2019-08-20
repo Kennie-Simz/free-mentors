@@ -1,0 +1,27 @@
+{
+  "name": "free-mentors",
+  "version": "1.0.0",
+  "description": "Free Mentors App, Node.JS, Application",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d UI"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kmozart/free-mentors.git"
+  },
+  "keywords": [
+    "Node.JS",
+    "Free-Mentors",
+    "Application"
+  ],
+  "author": "Kennedy Nyongesa Simiyu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kmozart/free-mentors/issues"
+  },
+  "homepage": "https://kmozart.github.io/free-mentors/",
+  "dependencies": {
+    "gh-pages": "^2.1.1"
+  }
+}
