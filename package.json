@@ -4,7 +4,7 @@
   "description": "Free Mentors App, Node.JS, Application",
   "main": "index.js",
   "scripts": {
-    "deploy": "gh-pages -d UI"
+    "deploy": "gh-pages -d free-mentors"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/Kmozart/free-mentors/issues"
   },
-  "homepage": "https://kmozart.github.io/free-mentors/",
+  "homepage": "https://kmozart.github.io/free-mentors",
   "dependencies": {
     "gh-pages": "^2.1.1"
   }
