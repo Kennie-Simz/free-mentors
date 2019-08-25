@@ -21,7 +21,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use('/api/v1/user', userRouter);
-app.use('/api/v1/mentor', mentorRouter);
+app.use('/api/v1/mentors', mentorRouter);
 app.use('/api/v1/session', sessionRouter);
 app.use('/api/v1/auth', authRouter);
 
