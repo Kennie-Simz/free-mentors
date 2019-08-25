@@ -34,6 +34,39 @@ class AuthController {
       },
     });
   }
+
+  static logUsers(req, res) {
+    const { email, password } = req.body;
+    const logUser = Users.find((item) => item.email === email);
+    if (logUser) {
+      if (logUser.password === password) {
+        const token = jwt.sign({ id: Users.id }, ENV_VAR.APP_SECRET, {
+          expiresIn: '24h', // expires in 24 hours
+        });
+        res.json({
+          status: '200',
+          message: 'User is successfully logged in!',
+          data: {
+            token,
+            id: logUser.id,
+            firstName: logUser.firstName,
+            lastName: logUser.lastName,
+            email: logUser.email,
+          },
+        });
+      } else {
+        res.status(400).json({
+          status: '400',
+          error: 'Password is incorrect',
+        });
+      }
+    } else {
+      res.status(400).json({
+        status: '400',
+        error: 'Email does not exist',
+      });
+    }
+  }
 }
 
 export default AuthController;
