@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { APP_SECRET } from './config';
+import config from './config';
+
+const ENV_VAR = config.get(process.env.NODE_ENV);
 
 const checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
@@ -17,7 +19,7 @@ const checkToken = (req, res, next) => {
 
   if (token) {
     // eslint-disable-next-line consistent-return
-    jwt.verify(token, APP_SECRET, (err, decoded) => {
+    jwt.verify(token, ENV_VAR.APP_SECRET, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

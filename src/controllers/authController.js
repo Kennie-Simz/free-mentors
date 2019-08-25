@@ -10,6 +10,8 @@ class AuthController {
     const {
       email, firstName, lastName, password, bio, address, occupation, expertise,
     } = req.body;
+    const isAdmin = false;
+    const level = 'User';
     const newUser = {
       id: newId,
       email,
@@ -20,10 +22,11 @@ class AuthController {
       address,
       occupation,
       expertise,
-      is_admin: false,
+      isAdmin,
+      level,
     };
     Users.push(newUser);
-    const token = jwt.sign({ id: newId }, ENV_VAR.APP_SECRET, {
+    const token = jwt.sign({ id: newId, isAdmin, level }, ENV_VAR.APP_SECRET, {
       expiresIn: '24h', // expires in 24 hours
     });
     return res.status(201).json({
@@ -40,9 +43,17 @@ class AuthController {
     const logUser = Users.find((item) => item.email === email);
     if (logUser) {
       if (logUser.password === password) {
-        const token = jwt.sign({ id: Users.id }, ENV_VAR.APP_SECRET, {
-          expiresIn: '24h', // expires in 24 hours
-        });
+        const token = jwt.sign(
+          {
+            id: logUser.id,
+            isAdmin: logUser.isAdmin,
+            level: logUser.level,
+          },
+          ENV_VAR.APP_SECRET,
+          {
+            expiresIn: '24h', // expires in 24 hours
+          },
+        );
         res.json({
           status: '200',
           message: 'User is successfully logged in!',
