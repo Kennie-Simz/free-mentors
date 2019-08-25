@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import config from './config';
 
@@ -18,7 +19,6 @@ const checkToken = (req, res, next) => {
   }
 
   if (token) {
-    // eslint-disable-next-line consistent-return
     jwt.verify(token, ENV_VAR.APP_SECRET, (err, decoded) => {
       if (err) {
         return res.json({
@@ -35,10 +35,6 @@ const checkToken = (req, res, next) => {
       message: 'Auth token is not supplied',
     });
   }
-  return res.json({
-    success: false,
-    message: 'Auth token is not supplied',
-  });
 };
 
 export default checkToken;
