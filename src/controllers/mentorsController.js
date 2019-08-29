@@ -16,6 +16,23 @@ class MentorsController {
       data: mentors,
     });
   }
+
+  static getSingleMentor(req, res) {
+    const { mentorId } = req.params;
+    const mentor = Users.find((value) => value.id === Number(mentorId));
+
+    if (!mentor) {
+      return res.status(404).json({
+        message: 'Error',
+        error: 'Mentor not found',
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      message: 'Mentor',
+      data: mentor,
+    });
+  }
 }
 
 export default MentorsController;
