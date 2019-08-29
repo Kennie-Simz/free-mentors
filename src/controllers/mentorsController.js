@@ -5,8 +5,8 @@ class MentorsController {
     const mentors = Users.find((value) => value.level === 'Mentor');
 
     if (!mentors) {
-      return res.status(200).json({
-        status: 200,
+      return res.status(404).json({
+        status: 404,
         message: 'No mentors found',
       });
     }
