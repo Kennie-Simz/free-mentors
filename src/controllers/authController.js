@@ -1,6 +1,9 @@
+/* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import Users from '../models/authModel';
 import config from '../config';
+import validateSignUpUser from './validations/signUpUser';
+import validateLoginUser from './validations/loginUser';
 
 const ENV_VAR = config.get(process.env.NODE_ENV);
 
@@ -10,6 +13,14 @@ class AuthController {
     const {
       email, firstName, lastName, password, bio, address, occupation, expertise,
     } = req.body;
+
+    const { valid, errors } = validateSignUpUser(email);
+    if (!valid) {
+      return res.status(201).json({
+        message: 'Validation errors',
+        errors,
+      });
+    }
     const isAdmin = false;
     const level = 'User';
     const newUser = {
@@ -26,9 +37,18 @@ class AuthController {
       level,
     };
     Users.push(newUser);
-    const token = jwt.sign({ id: newId, isAdmin, level }, ENV_VAR.APP_SECRET, {
-      expiresIn: '24h', // expires in 24 hours
-    });
+    const token = jwt.sign(
+      {
+        id: newId,
+        isAdmin,
+        level,
+        email,
+      },
+      ENV_VAR.APP_SECRET,
+      {
+        expiresIn: '24h', // expires in 24 hours
+      },
+    );
     return res.status(201).json({
       message: 'User created successfully!',
       data: {
@@ -40,6 +60,14 @@ class AuthController {
 
   static logUsers(req, res) {
     const { email, password } = req.body;
+    const { valid, errors } = validateLoginUser(email);
+    if (!valid) {
+      return res.status(201).json({
+        message: 'Validation errors',
+        errors,
+      });
+    }
+
     const logUser = Users.find((item) => item.email === email);
     if (logUser) {
       if (logUser.password === password) {
@@ -48,6 +76,7 @@ class AuthController {
             id: logUser.id,
             isAdmin: logUser.isAdmin,
             level: logUser.level,
+            email: logUser.email,
           },
           ENV_VAR.APP_SECRET,
           {
@@ -71,11 +100,6 @@ class AuthController {
           error: 'Password is incorrect',
         });
       }
-    } else {
-      res.status(400).json({
-        status: '400',
-        error: 'Email does not exist',
-      });
     }
   }
 }
