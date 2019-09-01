@@ -55,22 +55,6 @@ class MentorsController {
     });
   }
 
-  /* static allMentors(req, res) {
-    const mentors = Users.find((value) => value.level === 'Mentor');
-
-    if (!mentors) {
-      return res.status(404).json({
-        status: 404,
-        message: 'No mentors found',
-      });
-    }
-    return res.status(200).json({
-      status: 200,
-      message: 'Mentors',
-      data: Mentors,
-    });
-  } */
-
   static getSingleMentor(req, res) {
     const { mentorId } = req.params;
     const mentor = Users.find((value) => value.id === Number(mentorId));
@@ -78,7 +62,7 @@ class MentorsController {
     if (!mentor) {
       return res.status(404).json({
         message: 'Error',
-        error: 'Mentor not found',
+        error: 'User not found',
       });
     }
     if (mentor.level === 'Mentor') {
