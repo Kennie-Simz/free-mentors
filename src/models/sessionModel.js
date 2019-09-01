@@ -1,13 +1,3 @@
-const sessions = [
-  /* data:
-    {
-        sessionId: Number(),
-        mentorId: '',
-        menteeId: '',
-        questions: '',
-        menteeEmail: '',
-        status:
-    } */
-];
+const sessions = [];
 
 export default sessions;

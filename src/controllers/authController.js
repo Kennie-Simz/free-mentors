@@ -16,7 +16,7 @@ class AuthController {
 
     const { valid, errors } = validateSignUpUser(email);
     if (!valid) {
-      return res.status(201).json({
+      return res.status(400).json({
         message: 'Validation errors',
         errors,
       });
@@ -62,7 +62,7 @@ class AuthController {
     const { email, password } = req.body;
     const { valid, errors } = validateLoginUser(email);
     if (!valid) {
-      return res.status(201).json({
+      return res.status(400).json({
         message: 'Validation errors',
         errors,
       });
