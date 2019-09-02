@@ -1,6 +1,7 @@
 import Sessions from '../models/sessionModel';
 import validateMentorSession from './validations/createMentorshipRequest';
 import validateSessionAcceptReq from './validations/validateSessionAcceptReq';
+import validateSessionRejectReq from './validations/validateSessionRejectReq';
 
 class SessionController {
   static createMentorshipRequest(req, res) {
@@ -60,6 +61,38 @@ class SessionController {
         questions: sessionExists.questions,
         menteeEmail: sessionExists.menteeEmail,
         status: 'Accepted!',
+      },
+    });
+  }
+
+  static rejectMentorshipRequest(req, res) {
+    const { id } = req.decoded;
+    const { sessionId } = req.params;
+
+    const { valid, errors } = validateSessionRejectReq(id, sessionId);
+    if (!valid) {
+      return res.status(400).json({
+        errors,
+      });
+    }
+    const sessionExists = Sessions.find((item) => item.sessionId === Number(sessionId));
+
+    if (sessionExists.status === 'Rejected') {
+      return res.json({
+        message: 'Session already Rejected',
+      });
+    }
+
+    sessionExists.status = 'Accepted';
+    return res.status(200).json({
+      status: '200',
+      data: {
+        sessionId: sessionExists.id,
+        mentorId: sessionExists.mentorId,
+        menteeId: sessionExists.menteeId,
+        questions: sessionExists.questions,
+        menteeEmail: sessionExists.menteeEmail,
+        status: 'Rejected',
       },
     });
   }
