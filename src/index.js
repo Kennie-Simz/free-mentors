@@ -33,3 +33,5 @@ app.use((req, res) => {
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
+
+export default app;
