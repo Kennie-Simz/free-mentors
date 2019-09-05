@@ -10,8 +10,9 @@ body {
     flex-direction: column;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
 	height: 100vh;
-    margin: -20px 0 50px;
-    background-image: url(./images/logo1.gif);
+	margin: -20px 0 50px;
+	background-color: -webkit-linear-gradient(to right, #FBEAEB, rgb(255, 255, 255));
+	background: linear-gradient(to right, rgb(255, 243, 244), rgba(241, 181, 181, 0.664));
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -51,9 +52,9 @@ p {
 
 button {
 	border-radius: 20px;
-	border: 1px solid rgb(48, 149, 250);
-	background-color: #3D155F;
-	color: #FFFFFF;
+	border: 1px solid #EF8D9C;
+	background-color: rgb(214, 59, 83);
+	color: #000000;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 12px 45px;
@@ -83,8 +84,8 @@ button.ghost {
 }
 
 .form {
-	background-color: -webkit-linear-gradient(to right, #FBEAEB, #2F3C7E);
-	background: linear-gradient(to right, #FBEAEB, #2F3C7E);
+	background-color: -webkit-linear-gradient(to right, #FBEAEB, #EF8D9C);
+	background: linear-gradient(to right, #FBEAEB, #EF8D9C);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -175,8 +176,8 @@ input {
 
 .overlay {
 	background: #66ffff;
-	background: -webkit-linear-gradient(to right, #2F3C7E, #2F3C7E);
-	background: linear-gradient(to right, #2F3C7E, #2F3C7E);
+	background: -webkit-linear-gradient(to right, #EF8D9C, #EF8D9C);
+	background: linear-gradient(to right, #EF8D9C, #EF8D9C);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
