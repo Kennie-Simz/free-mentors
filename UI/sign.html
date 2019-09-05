@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="affordable ">
+    <link rel="stylesheet" href="sign.css">
+    <title>Free Mentors | Account Page </title>
+</head>
+<body>
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form action="#">
+                    <h1>Create Account</h1>
+                    <input type="text" placeholder="First name" />
+                    <input type="text" placeholder="Last name" />
+                    <input type="email" placeholder="Email" />
+                    <input type="password" placeholder="Password" />
+                    <input type="text" placeholder="Postal address..."  />
+                    <input type="text" placeholder="Occupation" />
+                    <input type="text" placeholder="Expertise..." />
+                    <button>Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form action="#">
+                    <h1>Free Mentors</h1>
+                    <h1>Sign in</h1>
+                    <input type="email" placeholder="Email" />
+                    <input type="password" placeholder="Password" />
+                    <a href="#">Forgot your password?</a>
+                    <button onclick="signedIn()">Sign In</button>
+                    
+                    <a href="admin.html">Admin?</a>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Free Mentors</h1>
+                        <h4> Are you ready for today?</h4>
+                        <h5> We are here for you!</h5>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <img class="mentor-logo" src="/images/logo1.gif" alt="mentor logo">
+                        <h1>Welcome!</h1>
+                        <h5>Lets get started!</h5>
+                        <button class="ghost" id="signUp" onclick="">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>
+                Free Mentors | Andela Kigali | Cycle 10
+            </p>
+        </footer>
+        <script src="/sign.js"></script>
+</body>
+</html>
