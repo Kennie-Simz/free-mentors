@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="pages.css">
-    <title>free-mentors|All Mentors</title>
+    <link rel="stylesheet" href="all.css">
+    <title>free-mentors|Mentors</title>
 </head>
 <body>
     <nav>
-        <div class="logo">
-            <h4>Free Mentors</h4>
-        </div>
+        <h1>| Free Mentors</h1>
+        <h2 class="responsive">FM</h2>
         <form id="search">
-            <input type="text" placeholder="search..." size="40">
+            <input type="text" placeholder="search...">
         </form>
         <ul class="nav-links">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="all.html"><span style="color: #fffb00">Mentors</span></a></li>
-            <li><a href="index.html">LogOut</a></li>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="all.html">Mentors</a></li>
+            <li><a href="sign.html">LogOut</a></li>
         </ul>
         <div class="burger">
             <div class="line1"></div>
@@ -26,104 +26,77 @@
             <div class="line3"></div>
         </div>
     </nav>
-   <div class="container-box">
-       <div class="box5">
-           <h3>Want to start a mentoring session?</h3>
-           <h4>Click 'REQUEST' to start.</h4>
-           <br>
-           <br>
-           <button>REQUEST</button>
-           <br>
-           <br>
-           <p>Our mentor's will be right with you!</p>
-       </div>
-        <div class="box1">
-                <h3>All Mentors</h3>
-                <br>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/male icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor01</a></span>
-                        <br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/profile icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor02</a></span>
-                        <br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/male icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor03</a></span>
-                        <br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                    <img src="./images/profile icon.png" alt="male-icon" width="30px" height="30px">
-                    <span style="float: right"><a href="mentor.html">Mentor04</a></span>
-                    <br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/male icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor05</a></span>
-                        <br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/profile icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor06</a></span><br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/male icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor07</a></span><br>
-                    </div>
-                </span>
-                <span>
-                    <div class="inner-box">
-                        <img src="./images/profile icon.png" alt="male-icon" width="30px" height="30px">
-                        <span style="float: right"><a href="mentor.html">Mentor08</a></span><br>
-                            </div>
-                        </span>
-                        <span>
-                                <div class="inner-box">
-                                    <img src="./images/male icon.png" alt="male-icon" width="30px" height="30px">
-                                    <span style="float: right"><a href="mentor.html">Mentor09</a></span><br>
-                                </div>
-                            </span>
-                            <span>
-                                <div class="inner-box">
-                                    <img src="./images/profile icon.png" alt="male-icon" width="30px" height="30px">
-                                    <span style="float: right"><a href="mentor.html">Mentor10</a></span><br>
-                                        </div>
-                                    </span>
-        </div>
-        <div class="box2">
-            <ul id="amentors">
-                <!----<li class="item">
-                    <input type="checkbox" name="check" value=""> 
-                    <p>I need assistance</p>
-                    <button class="del">del</button>
-                </li> ---->
+    <div class="main">
+            <h1>All Mentors</h1>
+            <ul class="cards">
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="./images/lady coder.jpg"></div>
+                  <div class="card_content">
+                    <h2 class="card_title">Lia Mae</h2>
+                    <p class="card_text">Photographer | NatGeo World</p>
+                    <p class="card_text">NatGeo Senior Grapher | Canon Award</p>
+                    <a href="./mentor.html"> <button class="btn card_btn" onclick="navigate()">Read More</button> </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="./images/prof 4.jpg"></div>
+                  <div class="card_content">
+                    <h2 class="card_title">Eckhart Jones</h2>
+                    <p class="card_text">Software Engineer</p>
+                    <p class="card_text">Senior Dev | Level D4</p>
+                    <a href="./mentor.html"> <button class="btn card_btn" onclick="navigate()">Read More</button> </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="./images/prof 3.jpg"></div>
+                  <div class="card_content">
+                    <h2 class="card_title">Malcolm Mutiso</h2>
+                    <p class="card_text">Business Enterpreneur</p>
+                    <p class="card_text">ABC Shark | Business Tycoon | Music Artist</p>
+                   <a href="./mentor.html"> <button class="btn card_btn" onclick="navigate()">Read More</button> </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="./images/lady coder 1.jpg"></div>
+                  <div class="card_content">
+                    <h2 class="card_title">Sandra Sanchez</h2>
+                    <p class="card_text">Yoga Artist | Krav-Maga Enthusiast | TKD Master </p>
+                    <p class="card_text">Instructor level 3 | MMA Captain </p>
+                    <a href="./mentor.html"> <button class="btn card_btn" onclick="navigate()">Read More</button> </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="./images/prof 5.jpg"></div>
+                  <div class="card_content">
+                    <h2 class="card_title">Gia De'Andre</h2>
+                    <p class="card_text">MMA Martial Artist | 3 time world champion</p>
+                    <p class="card_text">MMA Welterweights | Sparring Master | Kick-Boxing</p>
+                    <a href="./mentor.html"> <button class="btn card_btn" onclick="navigate()">Read More</button> </a>
+                  </div>
+                </div>
+              </li>
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="./images/male coder.jpg"></div>
+                  <div class="card_content">
+                    <h2 class="card_title">Joe Kasule</h2>
+                    <p class="card_text">Software Engineer | Andela KGL</p>
+                    <p class="card_text">Senior Dev | Level D4</p>
+                    <a href="./mentor.html"> <button class="btn card_btn" onclick="navigate()">Read More</button> </a>
+                  </div>
+                </div>
+              </li>
             </ul>
-            <button></button>
-            </div>
-    </div>
-    <footer>
-        <div class="footer">
-            <h3>freementors@andelakigali.co</h3>
-
-        </div>
-    </footer>
-    <script src="home.js"></script>
-    <script src="text.js"></script>
+          </div>
+  <script src="home.js"></script>
 </body>
 </html>
