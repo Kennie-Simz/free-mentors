@@ -37,7 +37,7 @@
   "bugs": {
     "url": "https://github.com/Kmozart/free-mentors/issues"
   },
-  "homepage": "https://github.com/Kmozart/free-mentors#readme",
+  "homepage": "https://github.com/Kmozart/free-mentors/UI/home.html",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
