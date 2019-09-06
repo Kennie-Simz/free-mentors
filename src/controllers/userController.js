@@ -3,6 +3,7 @@ import User from '../models/authModel';
 class UserController {
   static allUsers(req, res) {
     return res.json({
+      status: 200,
       message: 'List of all users',
       users: User,
     });
@@ -12,14 +13,13 @@ class UserController {
     const { isAdmin } = req.decoded;
     if (!isAdmin) {
       return res.status(401).json({
-        status: 'error',
+        status: 401,
         message: 'Only admin can change to mentor',
       });
     }
     const { userId } = req.params;
 
-    const user = User.filter((value) => value.id === Number(userId));
-
+    const user = User.find((item) => item.id === Number(userId));
     if (!user) {
       res.status(404).json({
         status: 404,

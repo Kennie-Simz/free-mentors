@@ -67,7 +67,6 @@ class AuthController {
         errors,
       });
     }
-
     const logUser = Users.find((item) => item.email === email);
     if (logUser) {
       if (logUser.password === password) {
