@@ -13,7 +13,16 @@ chai.should();
 
 describe('Mentors Project', () => {
   describe('Bearer token', () => {
-    it('should detect missing', (done) => {
+    it('should load documentation', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/docs')
+        .end((req, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+    it('should check auth token not provided', (done) => {
       chai
         .request(app)
         .get('/api/v1/user/users')
@@ -35,7 +44,7 @@ describe('Mentors Project', () => {
     });
   });
   describe('Page not found', () => {
-    it('should throw 404 on non existent URL', (done) => {
+    it('should throw 404 on non existent URLs', (done) => {
       chai
         .request(app)
         .get('/some/random/url')
@@ -133,7 +142,7 @@ describe('Mentors Project', () => {
           done();
         });
     });
-    it('should not sign in an non existent user', (done) => {
+    it('should not sign in a non existent user', (done) => {
       const newUser = {
         email: 'chddris@acde.com',
         password: '12345',
@@ -168,7 +177,7 @@ describe('Mentors Project', () => {
           done();
         });
     });
-    it('should test for non existent mentor', (done) => {
+    it('should test for a non existent mentor', (done) => {
       chai
         .request(app)
         .get('/api/v1/mentors/34')
@@ -219,10 +228,11 @@ describe('Mentors Project', () => {
         .send(newSession)
         .end((req, res) => {
           res.should.have.status(400);
+          res.body.errors.mentorId.should.equal('User with ID 332 not found');
           done();
         });
     });
-    it('should reject session accpetance if not mentor', (done) => {
+    it('should reject session acceptance if not mentor', (done) => {
       chai
         .request(app)
         .patch('/api/v1/session/1/accept')
@@ -232,7 +242,7 @@ describe('Mentors Project', () => {
           done();
         });
     });
-    it('should reject session accpetance if not mentor', (done) => {
+    it('should reject session acceptance if not mentor', (done) => {
       chai
         .request(app)
         .patch('/api/v1/session/13/accept')

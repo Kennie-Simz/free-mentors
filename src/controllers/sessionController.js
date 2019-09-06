@@ -12,6 +12,7 @@ class SessionController {
     const { valid, errors } = validateMentorSession(mentorId);
     if (!valid) {
       return res.status(400).json({
+        status: '400',
         message: 'Validation errors',
         errors,
       });
@@ -28,6 +29,7 @@ class SessionController {
     Sessions.push(newSession);
 
     return res.status(201).json({
+      status: '201',
       message: 'Session created successfully!',
       data: newSession,
     });
@@ -53,7 +55,7 @@ class SessionController {
 
     sessionExists.status = 'Accepted';
     return res.status(200).json({
-      status: 200,
+      status: '200',
       data: {
         sessionId: sessionExists.id,
         mentorId: sessionExists.mentorId,
