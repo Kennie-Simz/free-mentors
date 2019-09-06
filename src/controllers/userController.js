@@ -18,7 +18,7 @@ class UserController {
     }
     const { userId } = req.params;
 
-    const user = User.find((value) => value.id === Number(userId));
+    const user = User.filter((value) => value.id === Number(userId));
 
     if (!user) {
       res.status(404).json({
