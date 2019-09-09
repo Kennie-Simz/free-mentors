@@ -13,6 +13,7 @@
     "start": "npm run build && node ./build/index.js",
     "lint": "eslint \"src/**/*.js\" --fix",
     "lint-test": "eslint \"test/**/*.js\" --fix",
+    "db:migrate": "babel-node src/database/index.js",
     "test": "mocha --require @babel/register 'test/**/**spec.js' --exit",
     "test:cov": "nyc mocha --require @babel/register 'test/**/**spec.js' --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -66,6 +67,7 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "pg": "^7.12.1",
     "swagger-ui-express": "^4.0.7"
   }
 }
