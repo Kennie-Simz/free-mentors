@@ -11,8 +11,4 @@ const pool = new Pool({
   port: DB_PORT,
 });
 
-pool.query('SELECT NOW()', (err, res) => {
-  // eslint-disable-next-line no-console
-  console.log(err, res);
-  pool.end();
-});
+export default pool;
