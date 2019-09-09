@@ -50,6 +50,7 @@ class AuthController {
       },
     );
     return res.status(201).json({
+      status: 201,
       message: 'User created successfully!',
       data: {
         token,
@@ -83,7 +84,7 @@ class AuthController {
           },
         );
         res.json({
-          status: '200',
+          status: 200,
           message: 'User is successfully logged in!',
           data: {
             token,
@@ -95,7 +96,7 @@ class AuthController {
         });
       } else {
         res.status(400).json({
-          status: '400',
+          status: 400,
           error: 'Password is incorrect',
         });
       }

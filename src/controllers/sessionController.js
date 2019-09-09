@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Sessions from '../models/sessionModel';
 import validateMentorSession from './validations/createMentorshipRequest';
 import validateSessionAcceptReq from './validations/validateSessionAcceptReq';
@@ -12,7 +13,7 @@ class SessionController {
     const { valid, errors } = validateMentorSession(mentorId);
     if (!valid) {
       return res.status(400).json({
-        status: '400',
+        status: 400,
         message: 'Validation errors',
         errors,
       });
@@ -29,7 +30,7 @@ class SessionController {
     Sessions.push(newSession);
 
     return res.status(201).json({
-      status: '201',
+      status: 201,
       message: 'Session created successfully!',
       data: newSession,
     });
@@ -45,25 +46,30 @@ class SessionController {
         errors,
       });
     }
-    const sessionExists = Sessions.find((item) => item.sessionid === Number(sessionId));
+    const sessionExists = Sessions.find((item) => item.sessionId === Number(sessionId));
+    if (sessionExists) {
+      if (sessionExists.status === 'Accepted!') {
+        return res.json({
+          message: 'Session already accepted',
+        });
+      }
 
-    if (sessionExists.status === 'Accepted!') {
-      return res.json({
-        message: 'Session already accepted',
+      sessionExists.status = 'Accepted';
+      return res.status(200).json({
+        status: 200,
+        data: {
+          sessionId: sessionExists.id,
+          mentorId: sessionExists.mentorId,
+          menteeId: sessionExists.menteeId,
+          questions: sessionExists.questions,
+          menteeEmail: sessionExists.menteeEmail,
+          status: 'Accepted!',
+        },
       });
     }
-
-    sessionExists.status = 'Accepted';
-    return res.status(200).json({
-      status: '200',
-      data: {
-        sessionId: sessionExists.id,
-        mentorId: sessionExists.mentorId,
-        menteeId: sessionExists.menteeId,
-        questions: sessionExists.questions,
-        menteeEmail: sessionExists.menteeEmail,
-        status: 'Accepted!',
-      },
+    return res.status(404).json({
+      status: 404,
+      error: 'session does not exist',
     });
   }
 
@@ -85,9 +91,9 @@ class SessionController {
       });
     }
 
-    sessionExists.status = 'Accepted';
+    sessionExists.status = 'Rejected';
     return res.status(200).json({
-      status: '200',
+      status: 200,
       data: {
         sessionId: sessionExists.id,
         mentorId: sessionExists.mentorId,
