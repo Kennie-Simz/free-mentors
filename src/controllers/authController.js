@@ -1,9 +1,13 @@
 /* eslint-disable no-multi-str */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import Users from '../models/authModel';
-import { APP_SECRET } from '../config';
 import pool from '../database';
+import validateSignUpUser from './validations/signUpUser';
+import validateLoginUser from './validations/loginUser';
+
+dotenv.config();
 
 class AuthController {
   static getUsers(req, res) {
@@ -17,6 +21,14 @@ class AuthController {
     const {
       firstName, lastName, email, password, bio, address, occupation, expertise,
     } = req.body;
+    const { valid, errors } = validateSignUpUser(email);
+    if (!valid) {
+      return res.status(400).json({
+        message: 'Validation errors',
+        errors,
+      });
+    }
+
     // eslint-disable-next-line no-multi-str
     pool.query(
       'INSERT INTO users\
@@ -31,7 +43,7 @@ class AuthController {
             error: error.detail,
           });
         }
-        const token = jwt.sign({ id: res.insertId, email, firstName }, APP_SECRET, {
+        const token = jwt.sign({ id: res.insertId, email, firstName }, process.env.APP_SECRET, {
           expiresIn: '24hrs', // expires in 24 hours
         });
         return res.status(201).json({
@@ -47,6 +59,50 @@ class AuthController {
         });
       },
     );
+  }
+
+  static logUsers(req, res) {
+    const { email, password } = req.body;
+    const { valid, errors } = validateLoginUser(email);
+    if (!valid) {
+      return res.status(400).json({
+        message: 'Validation errors',
+        errors,
+      });
+    }
+    const logUser = Users.find((item) => item.email === email);
+    if (logUser) {
+      if (logUser.password === password) {
+        const token = jwt.sign(
+          {
+            id: logUser.id,
+            isAdmin: logUser.isAdmin,
+            level: logUser.level,
+            email: logUser.email,
+          },
+          process.env.APP_SECRET,
+          {
+            expiresIn: '24h', // expires in 24 hours
+          },
+        );
+        res.json({
+          status: 200,
+          message: 'User is successfully logged in!',
+          data: {
+            token,
+            id: logUser.id,
+            firstName: logUser.firstName,
+            lastName: logUser.lastName,
+            email: logUser.email,
+          },
+        });
+      } else {
+        res.status(400).json({
+          status: 400,
+          error: 'Password is incorrect',
+        });
+      }
+    }
   }
 }
 
