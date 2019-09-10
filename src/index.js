@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import userRouter from './routes/user';
 import mentorRouter from './routes/mentor';
@@ -7,6 +8,8 @@ import authRouter from './routes/auth';
 import sessionRouter from './routes/session';
 
 const swaggerDocument = require('./swagger.json');
+
+dotenv.config();
 
 const PORT = process.env.PORT || 4001;
 
