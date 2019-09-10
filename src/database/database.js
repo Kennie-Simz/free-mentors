@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import pool from './index';
 
 // self invoking async function
