@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
-import config from './config';
+import dotenv from 'dotenv';
 
-const ENV_VAR = config.get(process.env.NODE_ENV);
+dotenv.config();
 
 const checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
@@ -19,7 +19,7 @@ const checkToken = (req, res, next) => {
   }
 
   if (token) {
-    jwt.verify(token, ENV_VAR.APP_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.APP_SECRET, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-multi-str */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
@@ -43,11 +44,23 @@ class AuthController {
             error: error.detail,
           });
         }
-        const token = jwt.sign({
-          id: res.insertId, firstName, lastName, email, password, bio, address, occupation, expertise,
-        }, process.env.APP_SECRET, {
-          expiresIn: '24hrs', // expires in 24 hours
-        });
+        const token = jwt.sign(
+          {
+            id: res.insertId,
+            firstName,
+            lastName,
+            email,
+            password,
+            bio,
+            address,
+            occupation,
+            expertise,
+          },
+          process.env.APP_SECRET,
+          {
+            expiresIn: '24hrs', // expires in 24 hours
+          },
+        );
         return res.status(201).json({
           status: 201,
           message: 'User created successfully!',
