@@ -1,19 +1,27 @@
+/* eslint-disable max-len */
+/* eslint-disable no-multi-str */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import Users from '../models/authModel';
-import config from '../config';
+import pool from '../database';
 import validateSignUpUser from './validations/signUpUser';
 import validateLoginUser from './validations/loginUser';
 
-const ENV_VAR = config.get(process.env.NODE_ENV);
+dotenv.config();
 
 class AuthController {
-  static signUpUser(req, res) {
-    const newId = parseInt(Users.length, 10) + 1;
-    const {
-      email, firstName, lastName, password, bio, address, occupation, expertise,
-    } = req.body;
+  static getUsers(res) {
+    return res.json({
+      message: 'List of all users',
+      users: Users,
+    });
+  }
 
+  static signUpUser(req, res) {
+    const {
+      firstName, lastName, email, password, bio, address, occupation, expertise,
+    } = req.body;
     const { valid, errors } = validateSignUpUser(email);
     if (!valid) {
       return res.status(400).json({
@@ -21,42 +29,47 @@ class AuthController {
         errors,
       });
     }
-    const isAdmin = false;
-    const level = 'User';
-    const newUser = {
-      id: newId,
-      email,
-      firstName,
-      lastName,
-      password,
-      bio,
-      address,
-      occupation,
-      expertise,
-      isAdmin,
-      level,
-    };
-    Users.push(newUser);
-    const token = jwt.sign(
-      {
-        id: newId,
-        isAdmin,
-        level,
-        email,
-      },
-      ENV_VAR.APP_SECRET,
-      {
-        expiresIn: '24h', // expires in 24 hours
+
+    // eslint-disable-next-line no-multi-str
+    pool.query(
+      'INSERT INTO users\
+    (firstName, lastName, email, password, bio, address, occupation, expertise)\
+      VALUES ( $1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      [firstName, lastName, email, password, bio, address, occupation, expertise],
+      (error) => {
+        if (error) {
+          return res.status(401).json({
+            status: 401,
+            message: 'Unauthorized',
+            error: error.detail,
+          });
+        }
+        const token = jwt.sign(
+          {
+            id: res.insertId,
+            firstName,
+            lastName,
+            email,
+            password,
+            bio,
+            address,
+            occupation,
+            expertise,
+          },
+          process.env.APP_SECRET,
+          {
+            expiresIn: '24hrs', // expires in 24 hours
+          },
+        );
+        return res.status(201).json({
+          status: 201,
+          message: 'User created successfully!',
+          data: {
+            token,
+          },
+        });
       },
     );
-    return res.status(201).json({
-      status: 201,
-      message: 'User created successfully!',
-      data: {
-        token,
-        message: 'User created successfully!',
-      },
-    });
   }
 
   static logUsers(req, res) {
@@ -78,7 +91,7 @@ class AuthController {
             level: logUser.level,
             email: logUser.email,
           },
-          ENV_VAR.APP_SECRET,
+          process.env.APP_SECRET,
           {
             expiresIn: '24h', // expires in 24 hours
           },

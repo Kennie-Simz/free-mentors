@@ -1,11 +1,21 @@
 language: node_js
 
 node_js:
-  - "node"
+  - "10.7.0"
+
+install:
+  - npm i
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c "CREATE DATABASE freementors;" -U postgres
+
 cache:
   directories:
   - node_modules
 script:
   - npm run test
 after_success:
-  - npm run coverage
+  -npm run coverage
