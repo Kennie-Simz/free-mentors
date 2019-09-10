@@ -10,7 +10,7 @@ import validateLoginUser from './validations/loginUser';
 dotenv.config();
 
 class AuthController {
-  static getUsers(req, res) {
+  static getUsers(res) {
     return res.json({
       message: 'List of all users',
       users: Users,
@@ -33,9 +33,9 @@ class AuthController {
     pool.query(
       'INSERT INTO users\
     (firstName, lastName, email, password, bio, address, occupation, expertise)\
-      VALUES ( $1, $2, $3, $4, $5, $6, $7, $8)',
+      VALUES ( $1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [firstName, lastName, email, password, bio, address, occupation, expertise],
-      (error, results) => {
+      (error) => {
         if (error) {
           return res.status(401).json({
             status: 401,
@@ -43,7 +43,9 @@ class AuthController {
             error: error.detail,
           });
         }
-        const token = jwt.sign({ id: res.insertId, email, firstName }, process.env.APP_SECRET, {
+        const token = jwt.sign({
+          id: res.insertId, firstName, lastName, email, password, bio, address, occupation, expertise,
+        }, process.env.APP_SECRET, {
           expiresIn: '24hrs', // expires in 24 hours
         });
         return res.status(201).json({
@@ -51,10 +53,6 @@ class AuthController {
           message: 'User created successfully!',
           data: {
             token,
-            id: results.insertId,
-            firstName,
-            lastName,
-            email,
           },
         });
       },

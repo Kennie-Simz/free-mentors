@@ -12,8 +12,9 @@ import pool from './index';
      email  VARCHAR(255) NOT NULL UNIQUE,
      password  VARCHAR(255) NOT NULL,
      address  VARCHAR(255) NOT NULL,
-     bio  VARCHAR(255) NOT NULL UNIQUE,
+     bio  VARCHAR(255) NOT NULL,
      occupation  VARCHAR(255) NOT NULL,
+     expertise  VARCHAR(255) NOT NULL,
      isAdmin boolean DEFAULT false,
      createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    )`;
@@ -27,6 +28,7 @@ import pool from './index';
      address  VARCHAR(255) NOT NULL,
      bio  VARCHAR(255) NOT NULL,
      occupation  VARCHAR(255) NOT NULL,
+     expertise  VARCHAR(255) NOT NULL,
      isAdmin boolean DEFAULT false,
      createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    )`;
