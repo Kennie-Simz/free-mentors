@@ -1,13 +1,7 @@
-import Users from '../../models/authModel';
-
 const validateSignUpUser = (email) => {
   const errors = {};
 
-  const emailExists = Users.find((item) => item.email === email);
-
-  if (emailExists) {
-    errors.email = 'email already exists';
-  } else if (email.trim() === '') {
+  if (email.trim() === '') {
     errors.email = 'email is required';
   } else {
     // Letters, numbers and underscore
