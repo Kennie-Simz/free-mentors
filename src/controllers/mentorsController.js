@@ -1,15 +1,19 @@
+import dotenv from 'dotenv';
 import Users from '../models/authModel';
-import pool from '../database/database';
+import { runner } from '../database/index';
+
+dotenv.config();
 
 class MentorsController {
-  static allMentors(req, res) {
-    const mentors = Users.find((value) => value.level === 'Mentor');
-    pool.query('SELECT * FROM mentors ORDER BY id ASC', (valid, errors) => {
-      if (!valid) {
+  static async allMentors(req, res) {
+    try {
+      const getMentors = 'SELECT * FROM users WHERE isMentor=true';
+      const mentors = await runner(getMentors);
+
+      if (!mentors[0]) {
         return res.status(404).json({
           status: 404,
           message: 'No mentors found',
-          errors,
         });
       }
       return res.status(200).json({
@@ -17,7 +21,13 @@ class MentorsController {
         message: 'Mentors',
         data: mentors,
       });
-    });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        message: err.message,
+      });
+    }
+    // const mentors = Users.find((value) => value.level === 'Mentor');
   }
 
   static getSingleMentor(req, res) {
