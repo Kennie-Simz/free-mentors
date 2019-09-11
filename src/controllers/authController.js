@@ -25,6 +25,7 @@ class AuthController {
     const { valid, errors } = validateSignUpUser(email);
     if (!valid) {
       return res.status(400).json({
+        status: 400,
         message: 'Validation errors',
         errors,
       });

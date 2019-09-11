@@ -1,19 +1,22 @@
 import Users from '../models/authModel';
+import pool from '../database/database';
 
 class MentorsController {
   static allMentors(req, res) {
     const mentors = Users.find((value) => value.level === 'Mentor');
-
-    if (!mentors) {
-      return res.status(404).json({
-        status: 404,
-        message: 'No mentors found',
+    pool.query('SELECT * FROM mentors ORDER BY id ASC', (valid, errors) => {
+      if (!valid) {
+        return res.status(404).json({
+          status: 404,
+          message: 'No mentors found',
+          errors,
+        });
+      }
+      return res.status(200).json({
+        status: 200,
+        message: 'Mentors',
+        data: mentors,
       });
-    }
-    return res.status(200).json({
-      status: 200,
-      message: 'Mentors',
-      data: mentors,
     });
   }
 
