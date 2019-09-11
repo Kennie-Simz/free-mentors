@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import express from 'express';
 import AuthController from '../controllers/authController';
 
