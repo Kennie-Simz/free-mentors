@@ -2,10 +2,10 @@
 /* import chai from 'chai';
 import chaiHttp from 'chai-http';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import app from '../src';
-import config from '../src/config';
 
-const ENV_VAR = config.get(process.env.NODE_ENV);
+dotenv.config();
 
 // configure chai
 chai.use(chaiHttp);

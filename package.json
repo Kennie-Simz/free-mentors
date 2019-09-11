@@ -14,6 +14,7 @@
     "lint": "eslint \"src/**/*.js\" --fix",
     "lint-test": "eslint \"test/**/*.js\" --fix",
     "db:migrate": "babel-node src/database/database.js",
+    "db:migrate-users": "babel-node src/database/users.js",
     "test-email": "babel-node src/validations/index.js",
     "test": "mocha --require @babel/register 'test/**/**spec.js' --exit",
     "test:cov": "nyc mocha --require @babel/register 'test/**/**spec.js' --exit",

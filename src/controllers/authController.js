@@ -81,39 +81,34 @@ class AuthController {
         errors,
       });
     }
-    const logUser = Users.find((item) => item.email === email);
-    if (logUser) {
-      if (logUser.password === password) {
+    pool.query('SELECT * FROM users WHERE email = $1', [email], (err, results) => {
+      if (results.rowCount < 1) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Email does not exist!',
+        });
+      }
+      if (password === results.rows[0].password) {
         const token = jwt.sign(
           {
-            id: logUser.id,
-            isAdmin: logUser.isAdmin,
-            level: logUser.level,
-            email: logUser.email,
+            id: results.rows[0].id,
+            email: results.rows[0].email,
+            firstName: results.rows[0].firstName,
+            level: results.rows[0].level,
           },
           process.env.APP_SECRET,
           {
             expiresIn: '24h', // expires in 24 hours
           },
         );
-        res.json({
+        return res.status(200).json({
           status: 200,
-          message: 'User is successfully logged in!',
           data: {
             token,
-            id: logUser.id,
-            firstName: logUser.firstName,
-            lastName: logUser.lastName,
-            email: logUser.email,
           },
         });
-      } else {
-        res.status(400).json({
-          status: 400,
-          error: 'Password is incorrect',
-        });
       }
-    }
+    });
   }
 }
 
