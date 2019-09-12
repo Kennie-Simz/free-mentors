@@ -3,28 +3,13 @@
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { pool } from '../database';
+import pool from '../database';
 import validateSignUpUser from './validations/signUpUser';
 import validateLoginUser from './validations/loginUser';
 
 dotenv.config();
 
 class AuthController {
-  static getUsers(req, res) {
-    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-      if (error) {
-        return res.status(404).json({
-          status: 404,
-          message: 'Users not found',
-        });
-      }
-      return res.json({
-        message: 'Users',
-        users: results.rows,
-      });
-    });
-  }
-
   static signUpUser(req, res) {
     const {
       firstName, lastName, email, password, bio, address, occupation, expertise,
@@ -32,7 +17,6 @@ class AuthController {
     const { valid, errors } = validateSignUpUser(email);
     if (!valid) {
       return res.status(400).json({
-        status: 400,
         message: 'Validation errors',
         errors,
       });
@@ -41,9 +25,9 @@ class AuthController {
     // eslint-disable-next-line no-multi-str
     pool.query(
       'INSERT INTO users\
-    (firstName, lastName, email, password, bio, address, occupation, expertise)\
-      VALUES ( $1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-      [firstName, lastName, email, password, bio, address, occupation, expertise],
+    (firstName, lastName, email, password, bio, address, occupation, expertise, level)\
+      VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      [firstName, lastName, email, password, bio, address, occupation, expertise, 'User'],
       (error) => {
         if (error) {
           return res.status(401).json({
@@ -101,8 +85,9 @@ class AuthController {
           {
             id: results.rows[0].id,
             email: results.rows[0].email,
-            firstName: results.rows[0].firstName,
+            firstName: results.rows[0].firstname,
             level: results.rows[0].level,
+            isAdmin: results.rows[0].isadmin,
           },
           process.env.APP_SECRET,
           {
