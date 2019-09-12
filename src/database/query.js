@@ -11,8 +11,8 @@ const users = {
   isAdmin: "SELECT isadmin FROM users WHERE isadmin='true'",
   findAllMentors:
     "SELECT firstname, lastname, email, address, bio, occupation, expertise, isMentor, isAdmin FROM users WHERE isMentor='true'",
-  findOneMentor: "SELECT * FROM users WHERE isMentor='true' AND id=$1",
-  isMentorExist: "SELECT * FROM users WHERE id=$1 and isMentor='true'",
+  getspecificMentor: "SELECT * FROM users WHERE level = 'Mentor' AND id = $1",
+  isMentorExist: "SELECT * FROM users WHERE id=$1 and level = 'Mentor' = 'true'",
 };
 const sessions = {
   sessionExists: 'SELECT * FROM sessions WHERE  mentorId=$1 and questions=$2 and menteeId=$3',
