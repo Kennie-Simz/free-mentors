@@ -8,4 +8,9 @@ const pool = new Pool({
   connectionString,
 });
 
-export default pool;
+const runner = async (query) => {
+  const result = await pool.query(query);
+  return result.rows || result;
+};
+
+export { runner, pool };

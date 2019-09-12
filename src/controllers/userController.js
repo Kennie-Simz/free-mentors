@@ -1,11 +1,19 @@
 import User from '../models/authModel';
+import pool from '../database/index';
 
 class UserController {
   static allUsers(req, res) {
-    return res.json({
-      status: 200,
-      message: 'List of all users',
-      users: User,
+    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+      if (error) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Users not found',
+        });
+      }
+      return res.json({
+        message: 'Users',
+        users: results.rows,
+      });
     });
   }
 

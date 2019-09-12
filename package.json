@@ -19,7 +19,8 @@
     "test": "mocha --require @babel/register 'test/**/**spec.js' --exit",
     "test:cov": "nyc mocha --require @babel/register 'test/**/**spec.js' --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "format": "prettier-eslint 'server/**/*.{js,json}' --write"
+    "format": "prettier-eslint 'server/**/*.{js,json}' --write",
+    "createTable": "babel-node src/database/database.js"
   },
   "lint-staged": {
     "**/*.js": [

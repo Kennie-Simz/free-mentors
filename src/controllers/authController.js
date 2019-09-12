@@ -3,18 +3,25 @@
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import Users from '../models/authModel';
-import pool from '../database';
+import { pool } from '../database';
 import validateSignUpUser from './validations/signUpUser';
 import validateLoginUser from './validations/loginUser';
 
 dotenv.config();
 
 class AuthController {
-  static getUsers(res) {
-    return res.json({
-      message: 'List of all users',
-      users: Users,
+  static getUsers(req, res) {
+    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+      if (error) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Users not found',
+        });
+      }
+      return res.json({
+        message: 'Users',
+        users: results.rows,
+      });
     });
   }
 
@@ -25,6 +32,7 @@ class AuthController {
     const { valid, errors } = validateSignUpUser(email);
     if (!valid) {
       return res.status(400).json({
+        status: 400,
         message: 'Validation errors',
         errors,
       });
