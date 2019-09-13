@@ -1,7 +1,7 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "Free Mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions",
+		"description": "free-mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions",
 		"version": "1.0.0",
 		"title": "free-mentors",
 		"termsOfService": "http://swagger.io/terms/",
@@ -14,48 +14,59 @@
 		}
 	},
 	"host": "localhost:4001",
-	"basePath": "/api/v1",
+	"basePath": "/api/v2",
 	"tags": [
 		{
 			"name": "user",
-			"description":"signup,login,change user to mentor"
+			"description":"signup,login"
 		},
 		{
 			"name": "Mentor",
-			"description":"view all mentors, view specific mentor"
+			"description":"view all mentor,view specific mentor"
 		},
 		{
 			"name": "sessions",
-			"description":"request, accept, reject, review"
+			"description":"create, request, accept, reject, and review mentor-sessions"
+
+		},
+		{
+			"name": "reviews",
+			"description":"review mentor, delete review"
 
 		}
 	],
 	"schemes": [
+		"https",
 
 		"http"
 	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
 	"paths": {
-		"/signup": {
+		"auth/signup": {
 			"post": {
 				"tags": [
 					"user"
 				],
-				"summary": "Create user account",
+				"summary": "Create new user account",
 				"description": "this endpoint will will be used to create a new account",
-				"operationId": "adduser",
+				"operationId": "authSignUp",
+				"deprecated": false,
 				"consumes": [
-					"application/xml",
 					"application/json"
-				
 				],
 				"produces": [
-					"application/xml",
-					"application/json"
+					"application/xml"
 				],
 				"parameters": [
 					{
-						"in": "body",
-						"name": "body",
+						"in": "header",
+						"type": "string",
+						"name": "firstName",
 						"description": "User object that nedded to create account",
 						"required": true,
 						"schema": {
@@ -65,7 +76,7 @@
 				],
 				"responses": {
 					"201": {
-						"description": "Account created succesfully"
+						"description": "Account created successfully"
 					},
 					"400": {
 						"description": "bad request | Invalid input"
@@ -85,16 +96,15 @@
 				"tags": [
 					"user"
 				],
-				"summary": "user signin",
-				"description": "this endpoint a registered user can be able to sign in",
+				"summary": "authSignIn",
+				"description": "this endpoint allows user to be able to sign in",
 				"operationId": "signin",
+				"deprecated": false,
 				"consumes": [
-					"application/json",
-					"application/xml"
+					"application/json"
 				],
 				"produces": [
-					"application/json",
-					"application/xml"
+					"application/json"
 				],
 				"parameters": [
 					{
@@ -201,14 +211,14 @@
 						"example":{
 							
 								"id":"1",
-								"firstName": "mugiraneza",
-								"lastName": "john",
-								"email": "mujohn26@gmail.com",
-								"password": "mugiraneza",
-								"address": "kigali",
-								"bio": "born Nyagatare",
+								"firstName": "Kennedy",
+								"lastName": "Simiyu",
+								"email": "nyongesa17@outlook.com",
+								"password": "password",
+								"address": "123 ABC Place",
+								"bio": "bio goes here...",
 								"occupation": "student",
-								"expertise": "tech"
+								"expertise": "Software Dev"
 
 							  
 						}

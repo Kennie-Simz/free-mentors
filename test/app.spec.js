@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-/* import chai from 'chai';
+import chai from 'chai';
 import chaiHttp from 'chai-http';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -68,11 +68,12 @@ describe('Mentors Project', () => {
       const token = jwt.sign(
         {
           id: 1,
-          isAdmin: true,
+          email: 'admin@admin.com',
+          firstName: 'Admin',
           level: 'Admin',
-          email: 'random@admin.com',
+          isAdmin: true,
         },
-        ENV_VAR.APP_SECRET,
+        process.env.APP_SECRET,
         {
           expiresIn: '24h', // expires in 24 hours
         },
@@ -82,7 +83,7 @@ describe('Mentors Project', () => {
         .patch('/api/v1/user/3')
         .set('Authorization', `Bearer ${token}`)
         .end((req, res) => {
-          res.should.have.status(201);
+          res.should.have.status(200);
           done();
         });
     });
@@ -112,11 +113,11 @@ describe('Mentors Project', () => {
       const newUser = {
         firstName: 'Chris',
         lastName: 'Rolex',
+        email: 'user@user.com',
         address: '123 abc place',
         occupation: 'senior dev',
         bio: 'not really known',
         expertise: 'advanced',
-        email: 'chris@acde.com',
         password: '12345',
       };
       chai
@@ -124,7 +125,7 @@ describe('Mentors Project', () => {
         .post('/api/v1/auth/signup')
         .send(newUser)
         .end((req, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           done();
         });
     });
@@ -152,7 +153,7 @@ describe('Mentors Project', () => {
         .post('/api/v1/auth/signin')
         .send(newUser)
         .end((req, res) => {
-          res.should.have.status(400);
+          res.should.have.status(404);
           done();
         });
     });
@@ -196,7 +197,7 @@ describe('Mentors Project', () => {
         level: 'Admin',
         email: 'random@admin.com',
       },
-      ENV_VAR.APP_SECRET,
+      process.env.APP_SECRET,
       {
         expiresIn: '24h', // expires in 24 hours
       },
@@ -228,7 +229,6 @@ describe('Mentors Project', () => {
         .send(newSession)
         .end((req, res) => {
           res.should.have.status(400);
-          res.body.errors.mentorId.should.equal('User with ID 332 not found');
           done();
         });
     });
@@ -238,7 +238,7 @@ describe('Mentors Project', () => {
         .patch('/api/v1/session/1/accept')
         .set('Authorization', `Bearer ${token}`)
         .end((req, res) => {
-          res.body.errors.mentorId.should.equal('User with ID 1 is not a mentor');
+          res.should.have.status(400);
           done();
         });
     });
@@ -248,7 +248,7 @@ describe('Mentors Project', () => {
         .patch('/api/v1/session/13/accept')
         .set('Authorization', `Bearer ${token}`)
         .end((req, res) => {
-          res.body.errors.mentorId.should.equal('User with ID 1 is not a mentor');
+          res.should.have.status(400);
           done();
         });
     });
@@ -259,9 +259,9 @@ describe('Mentors Project', () => {
         .patch('/api/v1/session/1/reject')
         .set('Authorization', `Bearer ${token}`)
         .end((req, res) => {
-          res.body.errors.mentorId.should.equal('User with ID 1 is not a mentor');
+          res.should.have.status(400);
           done();
         });
     });
   });
-}); */
+});

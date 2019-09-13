@@ -1,108 +1,109 @@
+/* eslint-disable no-multi-str */
 /* eslint-disable consistent-return */
-import Sessions from '../models/sessionModel';
-import validateMentorSession from './validations/createMentorshipRequest';
-import validateSessionAcceptReq from './validations/validateSessionAcceptReq';
-import validateSessionRejectReq from './validations/validateSessionRejectReq';
+import pool from '../database';
 
 class SessionController {
+  static getSessionRequests(req, res) {
+    pool.query('SELECT * FROM sessions', (err, results) => res.json({
+      requests: results.rows,
+    }));
+  }
+
   static createMentorshipRequest(req, res) {
-    const newId = parseInt(Sessions.length, 10) + 1;
     const { id, email } = req.decoded;
     const { mentorId, questions } = req.body;
 
-    const { valid, errors } = validateMentorSession(mentorId);
-    if (!valid) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Validation errors',
-        errors,
-      });
-    }
-
-    const newSession = {
-      sessionId: newId,
-      mentorId,
-      menteeId: id,
-      questions,
-      menteeEmail: email,
-      status: 'Pending',
-    };
-    Sessions.push(newSession);
-
-    return res.status(201).json({
-      status: 201,
-      message: 'Session created successfully!',
-      data: newSession,
-    });
+    pool.query(
+      'SELECT * FROM users WHERE id = $1 AND level = $2',
+      [mentorId, 'Mentor'],
+      (err, results) => {
+        if (results.rowCount < 1) {
+          return res.status(400).json({
+            status: 400,
+            message: 'Mentor not found',
+          });
+        }
+        pool.query(
+          'INSERT INTO sessions\
+          (mentorid, menteeid, questions, menteeemail, status)\
+            VALUES ( $1, $2, $3, $4, $5) RETURNING *',
+          [mentorId, id, questions, email, 'Pending'],
+          (error) => {
+            if (error) {
+              return res.status(401).json({
+                status: 401,
+                data: {
+                  message: 'Unauthorized',
+                  error,
+                },
+              });
+            }
+            return res.status(201).json({
+              status: 200,
+              data: {
+                message: 'created successfuly',
+                mentorId,
+                questions,
+                email,
+                status: 'Pending',
+              },
+            });
+          },
+        );
+      },
+    );
   }
 
   static acceptMentorshipRequest(req, res) {
     const { id } = req.decoded;
     const { sessionId } = req.params;
 
-    const { valid, errors } = validateSessionAcceptReq(id, sessionId);
-    if (!valid) {
-      return res.status(400).json({
-        errors,
-      });
-    }
-    const sessionExists = Sessions.find((item) => item.sessionId === Number(sessionId));
-    if (sessionExists) {
-      if (sessionExists.status === 'Accepted!') {
-        return res.json({
-          message: 'Session already accepted',
-        });
-      }
+    pool.query(
+      'SELECT * FROM sessions WHERE id = $1 AND mentorid = $2',
+      [sessionId, id],
+      (err, results) => {
+        if (results.rowCount < 1) {
+          return res.status(400).json({
+            status: 400,
+            message: 'Mentorship session request not found',
+          });
+        }
 
-      sessionExists.status = 'Accepted';
-      return res.status(200).json({
-        status: 200,
-        data: {
-          sessionId: sessionExists.id,
-          mentorId: sessionExists.mentorId,
-          menteeId: sessionExists.menteeId,
-          questions: sessionExists.questions,
-          menteeEmail: sessionExists.menteeEmail,
-          status: 'Accepted!',
-        },
-      });
-    }
-    return res.status(404).json({
-      status: 404,
-      error: 'session does not exist',
-    });
+        pool.query(
+          'UPDATE sessions SET status = $1 WHERE id = $2 RETURNING *',
+          ['Accepted', sessionId],
+          (errorr, resultss) => res.json({
+            msg: resultss.rows,
+          }),
+        );
+      },
+    );
   }
 
   static rejectMentorshipRequest(req, res) {
     const { id } = req.decoded;
     const { sessionId } = req.params;
 
-    const { valid, errors } = validateSessionRejectReq(id, sessionId);
-    if (!valid) {
-      return res.status(400).json({
-        errors,
-      });
-    }
-    const sessionExists = Sessions.find((item) => item.sessionId === Number(sessionId));
+    pool.query(
+      'SELECT * FROM sessions WHERE id = $1 AND mentorid = $2',
+      [sessionId, id],
+      (err, results) => {
+        if (results.rowCount < 1) {
+          return res.status(400).json({
+            status: 400,
+            data: { message: 'Mentorship session request not found' },
+          });
+        }
 
-    if (sessionExists.status === 'Rejected') {
-      return res.json({
-        message: 'Session already Rejected',
-      });
-    }
-
-    sessionExists.status = 'Rejected';
-    return res.status(200).json({
-      status: 200,
-      data: {
-        sessionId: sessionExists.id,
-        mentorId: sessionExists.mentorId,
-        menteeId: sessionExists.menteeId,
-        questions: sessionExists.questions,
-        menteeEmail: sessionExists.menteeEmail,
-        status: 'Rejected',
+        pool.query(
+          'UPDATE sessions SET status = $1 WHERE id = $2 RETURNING *',
+          ['Rejected', sessionId],
+          (errorr, resultss) => res.json({
+            msg: resultss.rows,
+          }),
+        );
       },
-    });
+    );
   }
 }
 
