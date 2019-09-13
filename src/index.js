@@ -1,17 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import swaggerUi from 'swagger-ui-express';
 import userRouter from './routes/user';
 import mentorRouter from './routes/mentor';
 import authRouter from './routes/auth';
 import sessionRouter from './routes/session';
 
-const swaggerDocument = require('./swagger.json');
-
 dotenv.config();
 
-const PORT = process.env.PORT || 4060;
+const PORT = process.env.PORT || 4020;
 
 const app = express();
 app.use(
@@ -27,7 +24,6 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/mentors', mentorRouter);
 app.use('/api/v1/session', sessionRouter);
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
   res.status(404).json({

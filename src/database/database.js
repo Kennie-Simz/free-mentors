@@ -20,11 +20,11 @@ const tables = async () => {
    )`;
   const sessions = `CREATE TABLE IF NOT EXISTS sessions (
     id serial PRIMARY KEY,
-    mentorId  VARCHAR(255) NOT NULL,
-    menteeId  VARCHAR(255) NOT NULL DEFAULT 'available',
-    questions  VARCHAR(255) NOT NULL,
-    menteeEmail VARCHAR(255) NOT NULL,
-    status TEXT DEFAULT 'pending',
+    mentorId  VARCHAR(255),
+    menteeId  VARCHAR(255),
+    questions  VARCHAR(255),
+    menteeEmail VARCHAR(255),
+    status TEXT,
     createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`;
 
