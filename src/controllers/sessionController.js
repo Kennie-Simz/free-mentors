@@ -1,39 +1,44 @@
+/* eslint-disable no-multi-str */
 /* eslint-disable consistent-return */
 import Sessions from '../models/sessionModel';
-import validateMentorSession from './validations/createMentorshipRequest';
 import validateSessionAcceptReq from './validations/validateSessionAcceptReq';
 import validateSessionRejectReq from './validations/validateSessionRejectReq';
+import pool from '../database';
 
 class SessionController {
   static createMentorshipRequest(req, res) {
-    const newId = parseInt(Sessions.length, 10) + 1;
     const { id, email } = req.decoded;
     const { mentorId, questions } = req.body;
-
-    const { valid, errors } = validateMentorSession(mentorId);
-    if (!valid) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Validation errors',
-        errors,
-      });
-    }
-
-    const newSession = {
-      sessionId: newId,
-      mentorId,
-      menteeId: id,
-      questions,
-      menteeEmail: email,
-      status: 'Pending',
-    };
-    Sessions.push(newSession);
-
-    return res.status(201).json({
-      status: 201,
-      message: 'Session created successfully!',
-      data: newSession,
-    });
+    pool.query(
+      'SELECT * FROM users WHERE id = $1 AND level = $2',
+      [mentorId, 'Mentor'],
+      (err, results) => {
+        if (results.rowCount < 1) {
+          return res.status(400).json({
+            status: 400,
+            message: 'Mentor not found',
+          });
+        }
+        pool.query(
+          'INSERT INTO sessions\
+  (mentorid, menteeid, questions, menteeemail, status)\
+   VALUES ($1, $2, $3, $4, $5) RETURNING *',
+          [mentorId, id, questions, email, 'Pending'],
+          (error) => {
+            if (error) {
+              return res.status(401).json({
+                status: 401,
+                message: 'Unauthorized',
+                error: error.detail,
+              });
+            }
+            return res.json({
+              data: results.rows,
+            });
+          },
+        );
+      },
+    );
   }
 
   static acceptMentorshipRequest(req, res) {
