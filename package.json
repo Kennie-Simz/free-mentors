@@ -16,9 +16,9 @@
     "db:migrate": "babel-node src/database/database.js",
     "db:migrate-users": "babel-node src/database/users.js",
     "test-email": "babel-node src/validations/index.js",
-    "test": "mocha --require @babel/register 'test/**/**spec.js' --exit",
-    "test:cov": "nyc mocha --require @babel/register 'test/**/**spec.js' --exit",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "npm run db:migrate && npm run db:migrate-users && mocha --require @babel/register 'test/**/**spec.js' --exit",
+    "test:cov": "npm run db:migrate && npm run db:migrate-users && nyc mocha --require @babel/register 'test/**/**spec.js' --exit",
+    "coverage": "npm run db:migrate && npm run db:migrate-users && nyc report --reporter=text-lcov | coveralls",
     "format": "prettier-eslint 'server/**/*.{js,json}' --write",
     "createTable": "babel-node src/database/database.js"
   },
