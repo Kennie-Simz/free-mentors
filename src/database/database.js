@@ -1,14 +1,5 @@
 /* eslint-disable no-console */
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({
-  connectionString,
-});
-
+import pool from './index';
 // self invoking async function
 const tables = async () => {
   const dropTables = 'DROP TABLE IF EXISTS users, sessions';
@@ -27,13 +18,13 @@ const tables = async () => {
     isAdmin boolean DEFAULT false,
     createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    )`;
-  const sessions = `CREATE TABLE IF NOT EXISTS properties (
+  const sessions = `CREATE TABLE IF NOT EXISTS sessions (
     id serial PRIMARY KEY,
     mentorId  VARCHAR(255) NOT NULL,
     menteeId  VARCHAR(255) NOT NULL DEFAULT 'available',
     questions  VARCHAR(255) NOT NULL,
-    menteeEmail VARCHAR(255) NOT NULL UNIQUE,
-    status TEXT,
+    menteeEmail VARCHAR(255) NOT NULL,
+    status TEXT DEFAULT 'pending',
     createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`;
 
