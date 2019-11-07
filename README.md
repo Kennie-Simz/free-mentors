@@ -65,7 +65,7 @@ nodemon wraps your application, so you can pass all the arguments you would norm
 ----------------------------------------------------------------------------------------------------------------------------------------
 To clone this repo run the following command:
 
-                        git@github.com:Kmozart/free-mentors.git
+                        https://github.com/Kennie-Simz/free-mentors.git
 
 ## Set up the server
 - To install all the required dependencies listed in the package.json file, run the following command in your terminal
@@ -117,7 +117,7 @@ To clone this repo run the following command:
 
 
 External Links
-UI Template for the application can be found here on [gh-pages](https://kmozart.github.io/free-mentors/home.html).
+UI Template for the application can be found here on [gh-pages](https://kennie-simz.github.io/free-mentors/home.html).
 
 Pivotal Tracker Stories can found on [pivotal tracker](https://www.pivotaltracker.com/n/projects/2382912).
 
